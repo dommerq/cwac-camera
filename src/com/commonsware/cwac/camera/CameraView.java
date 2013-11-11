@@ -193,9 +193,16 @@ public class CameraView extends ViewGroup implements
     camera.reconnect();
   }
 
-  public void autoFocus() {
+  public void autoFocus(OnAutoFocus focusCallBack) {
     if (inPreview) {
       camera.autoFocus(getHost());
+			camera.autoFocus(new AutoFocusCallback() {
+
+				@Override
+				public void onAutoFocus(boolean success, Camera camera) {
+					focusCallBack.onAutoFocus(success, camera);
+				}
+			});
     }
   }
 
